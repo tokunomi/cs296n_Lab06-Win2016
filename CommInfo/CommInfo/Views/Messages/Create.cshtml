@@ -1,0 +1,91 @@
+﻿@model CommInfo.Models.MessageViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Message</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 'From' dropdown list-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.From, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownList("fromMember", String.Empty)*@
+                @Html.DropDownList("FromList", String.Empty)
+                @Html.ValidationMessageFor(model => model.From)
+            </div>
+        </div>
+
+        <!-- 'From' without dropdown -->
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.From, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Threads dropdown list-->
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.ThreadItem.Topic, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ThreadList", String.Empty)
+                @Html.ValidationMessageFor(model => model.ThreadItem.Topic)
+            </div>
+        </div>*@
+
+        <!-- Threads, without dropdown-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThreadItem.Topic, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("topicName")
+                @*@Html.DropDownList("ThreadList", String.Empty)*@
+                @Html.ValidationMessageFor(model => model.ThreadItem.Topic, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
