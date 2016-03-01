@@ -75,6 +75,7 @@ namespace CommInfo.Controllers
         }
 
         // GET: Threads/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -98,6 +99,7 @@ namespace CommInfo.Controllers
         }
 
         // GET: Threads/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -129,6 +131,7 @@ namespace CommInfo.Controllers
         }
 
         // GET: Threads/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

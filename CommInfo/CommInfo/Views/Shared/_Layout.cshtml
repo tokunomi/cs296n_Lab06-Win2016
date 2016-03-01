@@ -40,7 +40,8 @@
                     </li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                @*@Html.Partial("_LoginPartial")*@ <!--This is the default login/logoff built by the framework-->
+                @Html.Partial("_AuthLoginPartial")
             </div>
         </div>
     </div>

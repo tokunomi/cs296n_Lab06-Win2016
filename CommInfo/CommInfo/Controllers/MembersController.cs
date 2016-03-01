@@ -17,7 +17,8 @@ namespace CommInfo.Controllers
         // GET: Members
         public ActionResult Index()
         {
-            return View(db.Members.ToList());
+            return View(db.Users.ToList());
+            //return View(db.Members.ToList());
         }
 
         // GET: Members/Details/5
@@ -27,7 +28,8 @@ namespace CommInfo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Member member = db.Members.Find(id);
+            Member member = db.Users.Find(id);
+            //Member member = db.Members.Find(id);
             if (member == null)
             {
                 return HttpNotFound();
@@ -36,6 +38,7 @@ namespace CommInfo.Controllers
         }
 
         // GET: Members/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -50,7 +53,8 @@ namespace CommInfo.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Members.Add(member);
+                db.Users.Add(member);
+                //db.Members.Add(member);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -59,13 +63,15 @@ namespace CommInfo.Controllers
         }
 
         // GET: Members/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Member member = db.Members.Find(id);
+            Member member = db.Users.Find(id);  // Using Identity's User model
+            //Member member = db.Members.Find(id);
             if (member == null)
             {
                 return HttpNotFound();
@@ -90,13 +96,15 @@ namespace CommInfo.Controllers
         }
 
         // GET: Members/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Member member = db.Members.Find(id);
+            Member member = db.Users.Find(id);
+            //Member member = db.Members.Find(id);
             if (member == null)
             {
                 return HttpNotFound();
@@ -109,10 +117,15 @@ namespace CommInfo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Member member = db.Members.Find(id);
-            db.Members.Remove(member);
+            Member member = db.Users.Find(id);
+            db.Users.Remove(member);
             db.SaveChanges();
             return RedirectToAction("Index");
+            
+            //Member member = db.Members.Find(id);
+            //db.Members.Remove(member);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

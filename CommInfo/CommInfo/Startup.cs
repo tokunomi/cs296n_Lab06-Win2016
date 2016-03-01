@@ -19,6 +19,7 @@ namespace CommInfo
         }
     } /* */
 
+    // Original Startup class
    /* public class Startup
     {
         public void Configuration(IAppBuilder app)

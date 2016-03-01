@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,7 +7,8 @@ using System.Web;
 
 namespace CommInfo.Models
 {
-    public class CommInfoContext : DbContext
+    public class CommInfoContext : IdentityDbContext<Member>  // using Member instead of AppUser
+    //public class CommInfoContext : DbContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
         // 
@@ -24,7 +26,7 @@ namespace CommInfo.Models
 
         public System.Data.Entity.DbSet<CommInfo.Models.Forum> Fora { get; set; }
 
-        public System.Data.Entity.DbSet<CommInfo.Models.Member> Members { get; set; }
+        //public System.Data.Entity.DbSet<CommInfo.Models.Member> Members { get; set; }  // using Identity's User model
     
     }
 }

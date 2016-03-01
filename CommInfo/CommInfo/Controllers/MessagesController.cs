@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CommInfo.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CommInfo.Controllers
 {
@@ -40,10 +41,12 @@ namespace CommInfo.Controllers
         }
 
         // GET: Messages/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.FromList =
-                new SelectList(db.Members.OrderBy(m => m.Username), "MemberID", "Username");
+                new SelectList(db.Users.OrderBy(m => m.UserName), "MemberID", "UserName");  // Using Identity's UserName?
+                //new SelectList(db.Members.OrderBy(m => m.Username), "MemberID", "Username");
 
             ViewBag.ThreadList =
                 new SelectList(db.Threads.OrderBy(t => t.Topic), "ThreadID", "Topic");
@@ -55,14 +58,18 @@ namespace CommInfo.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "MessageID,Date,From,Subject,Body, ThreadItem, ThreadList, MemberItem, FromList")] MessageViewModel messageVM, int? ThreadList, int FromList, string topicName)
         {
             if (ModelState.IsValid)
             {
-                Member fromMember = (from mb in db.Members
-                                 where mb.MemberID == FromList
+                Member fromMember = (from mb in db.Users
+                                 where mb.MemberID == FromList  // can't seem to use Identity's Id
                                  select mb).FirstOrDefault();
+                //Member fromMember = (from mb in db.Members
+                //                 where mb.MemberID == FromList  // can't seem to use Identity's Id
+                //                 select mb).FirstOrDefault();
                 //Message messageFrom = (from m in db.Messages
                 //                   where m.MessageID == FromList
                 //                   select m).FirstOrDefault();
@@ -92,9 +99,11 @@ namespace CommInfo.Controllers
 
                 Message message = new Message();
                     message.Date = messageVM.Date;
-                    message.From = fromMember.Username;
+                    message.From = fromMember.UserName;  // this should be Identity's UserName
+                    //message.From = fromMember.Username;
                     message.Subject = messageVM.Subject;
                     message.Body = messageVM.Body;
+                    //message.MemberID = fromMember.Id;    
                     message.MemberID = fromMember.MemberID;
 
                 thread.Messages.Add(message);
@@ -108,10 +117,12 @@ namespace CommInfo.Controllers
         }
 
         // GET: Messages/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             ViewBag.FromList =
-                new SelectList(db.Members.OrderBy(m => m.Username), "MemberID", "Username");
+                new SelectList(db.Users.OrderBy(m => m.UserName), "MemberID", "UserName");
+                //new SelectList(db.Members.OrderBy(m => m.Username), "MemberID", "Username");
 
             //ViewBag.ThreadList =
             //    new SelectList(db.Threads.OrderBy(t => t.Topic), "ThreadID", "Topic");
@@ -134,6 +145,7 @@ namespace CommInfo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "MessageID,Date,From,Subject,Topic,Body, ThreadItem, MemberItem, FromList")] Message message, int FromList, string topicName)   // from Message model
         //public ActionResult Edit([Bind(Include = "MessageID,Date,From,Subject,Body, MemberItem, ThreadItem, FromList")] MessageViewModel messageVM, int FromList, string topicName)  
         //public ActionResult Edit([Bind(Include = "MessageID,Date,From,Subject,Body")] Message message)  // removed 'To' from Bind
@@ -150,6 +162,7 @@ namespace CommInfo.Controllers
         }
 
         // GET: Messages/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -167,6 +180,7 @@ namespace CommInfo.Controllers
         // POST: Messages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Message message = db.Messages.Find(id);

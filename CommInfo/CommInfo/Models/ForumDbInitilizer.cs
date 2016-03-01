@@ -16,10 +16,10 @@ namespace CommInfo.Models
             DateTime seedDate = new DateTime(2016, 01, 01);
 
             // Member Seed
-            Member memb001 = new Member { NameFirst = "John", NameLast = "Watson", Username = "John", email = "jwatson@test.com" };
-            Member memb002 = new Member { NameFirst = "David", NameLast = "Yamamoto", Username = "David", email = "bigwavedave@test.com" };
-            Member memb003 = new Member { NameFirst = "Carrie", NameLast = "Tam", Username = "Carrie", email = "carrietam@test.com" };
-            Member memb004 = new Member { NameFirst = "Nani", NameLast = "Kealoha", Username = "Nani", email = "nanik@test.com" };
+            Member memb001 = new Member { NameFirst = "John", NameLast = "Watson", UserName = "John", Email = "jwatson@test.com" };  // UserName, Email from Identity
+            Member memb002 = new Member { NameFirst = "David", NameLast = "Yamamoto", UserName = "David", Email = "bigwavedave@test.com" };
+            Member memb003 = new Member { NameFirst = "Carrie", NameLast = "Tam", UserName = "Carrie", Email = "carrietam@test.com" };
+            Member memb004 = new Member { NameFirst = "Nani", NameLast = "Kealoha", UserName = "Nani", Email = "nanik@test.com" };
 
             // Fora seed
             Forum frm001 = new Forum { ForumID = 01, ForumName = "Forum 1" };
