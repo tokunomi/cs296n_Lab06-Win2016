@@ -38,7 +38,8 @@ namespace CommInfo.Controllers
             }
 
             // Using UserManager (no async)
-            var user = userManager.Find(model.Email, model.Password);
+            var user = userManager.Find(model.UserName, model.Password);
+            //var user = userManager.Find(model.Email, model.Password);  // this uses the email as the username
 
             if (user != null)
             {
@@ -53,30 +54,6 @@ namespace CommInfo.Controllers
             // user authN failed
             ModelState.AddModelError("", "Invalid email or password");
             return View();
-
-
-            // Hard coded user
-            // Don't do this in production!
-            /*if (model.Email == "admin@admin.com" && model.Password == "password")
-            {
-                var identity = new ClaimsIdentity(new[] {
-                new Claim(ClaimTypes.Name, "Admin"),
-                new Claim(ClaimTypes.Email, "test@test.com"),
-                new Claim(ClaimTypes.Country, "United States")
-            },
-                    "ApplicationCookie");
-
-                var ctx = Request.GetOwinContext();
-                var authManager = ctx.Authentication;
-
-                authManager.SignIn(identity);
-
-                return Redirect(GetRedirectUrl(model.ReturnUrl));
-            }
-
-            // user authN failed
-            ModelState.AddModelError("", "Invalid email or password");
-            return View();  */
         }
 
         private string GetRedirectUrl(string returnUrl)
@@ -138,7 +115,7 @@ namespace CommInfo.Controllers
                 UserName = model.UserName
             };
 
-            var result = userManager.Create(user, model.Password);  // Error: {System.Data.Entity.Validation.DbEntityValidationResult}
+            var result = userManager.Create(user, model.Password);  
 
             if (result.Succeeded)
             {

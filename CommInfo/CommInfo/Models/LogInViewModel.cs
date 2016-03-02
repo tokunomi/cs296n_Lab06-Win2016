@@ -9,9 +9,12 @@ namespace CommInfo.Models
 {
     public class LogInViewModel
     {
+        //[Required]
+        //[DataType(DataType.EmailAddress)]
+        //public string Email { get; set; }
+
         [Required]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
